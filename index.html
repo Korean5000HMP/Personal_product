@@ -28,6 +28,7 @@
   <nav>
     <a href="../../index.html">전체 프로젝트</a>
     <a href="../index.html">TEAM 01</a>
+    <a href="#scenario">시나리오</a>
     <a href="#scenes">프로그램</a>
     <a href="#views">뷰</a>
     <a href="#festival">축제장 걷기</a>
@@ -95,9 +96,39 @@
   </div></div>
 
   <!-- 2. 8개의 장면 -->
+  <!-- 1-1. 제품 시나리오 영상 -->
+  <!-- 영상 넣는 법: media 폴더에 scenario.mp4 (H.264, 10~20MB 권장)를 넣으면 자동으로 재생돼요.
+       대표 이미지는 media/scenario-poster.jpg (선택). 파일 이름을 바꾸려면 아래 <source src="..."> 를 고치면 돼요. -->
+  <section class="block" id="scenario">
+    <div class="sec-head reveal">
+      <div><div class="no">01 — SCENARIO</div><h2>축제에서,<br>이렇게 씁니다.</h2></div>
+      <p>휴대폰 뒷면에 붙인 다이얼을 돌려 보고 싶은 프로그램을 고르고, 일정에 담고, 축제장을 찾아가는 하루를 영상으로 담았습니다.</p>
+    </div>
+    <div class="sc-frame reveal" id="scFrame">
+      <video id="scVideo" muted playsinline loop preload="metadata" poster="media/scenario-poster.jpg">
+        <source src="media/scenario.mp4" type="video/mp4">
+      </video>
+      <div class="sc-ph" id="scPh">
+        <div class="sc-ph-in">
+          <span class="sc-play"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z"/></svg></span>
+          <b>제품 시나리오 영상</b>
+          <small>영상이 곧 업데이트될 예정이에요</small>
+        </div>
+        <span class="sc-tag">16 : 9</span>
+      </div>
+      <button class="sc-sound" id="scSound" hidden>소리 켜고 처음부터 ▶</button>
+    </div>
+    <ol class="sc-steps reveal">
+      <li><span>01</span><b>휴대폰에 붙이기</b><p>오브제를 휴대폰 뒷면에 붙이면 축제 준비 끝.</p></li>
+      <li><span>02</span><b>실버 다이얼로 고르기</b><p>돌릴 때마다 아이콘 불빛이 하나씩 켜지며 프로그램을 골라요.</p></li>
+      <li><span>03</span><b>유리판으로 시간 확인</b><p>유리판이 시작 시간으로 움직여 숫자를 크게 보여줘요.</p></li>
+      <li><span>04</span><b>일정에 담고 찾아가기</b><p>담은 일정을 따라 축제장을 둘러봐요.</p></li>
+    </ol>
+  </section>
+
   <section class="block" id="scenes">
     <div class="sec-head reveal">
-      <div><div class="no">01 — PROGRAM</div><h2>링 위의 아이콘,<br>이틀간의 프로그램.</h2></div>
+      <div><div class="no">02 — PROGRAM</div><h2>링 위의 아이콘,<br>이틀간의 프로그램.</h2></div>
       <p>오브제 상단의 은빛 링에 새겨진 아이콘은 강남페스티벌의 프로그램을 하나씩 가리킵니다. 10월 3일과 4일, 이틀 동안 이어지는 축제의 시간표를 하나의 원 안에 담았습니다.<br><b class="tt-hint">프로그램을 누르면 3D 오브제에서 그 아이콘이 켜지고, 유리판이 시작 시간으로 움직여요.</b></p>
     </div>
     <div class="timetable reveal">
@@ -111,7 +142,7 @@
   <!-- 3. 4면 뷰 -->
   <section class="block" id="views" style="padding-top:0">
     <div class="sec-head reveal">
-      <div><div class="no">02 — FORM &amp; DETAIL</div><h2>서로 다른 시선으로<br>만나는 오브제.</h2></div>
+      <div><div class="no">03 — FORM &amp; DETAIL</div><h2>서로 다른 시선으로<br>만나는 오브제.</h2></div>
       <p>위에서, 비스듬히, 정면에서, 옆에서. 네 방향의 렌더링으로 형태와 디테일을 살펴보세요.</p>
     </div>
     <div class="views reveal">
@@ -181,7 +212,7 @@
   <!-- 4-1. 축제장 걷기 (1인칭 + 다이얼로 일정 담기) -->
   <section class="block" id="festival">
     <div class="sec-head reveal">
-      <div><div class="no">03 — FESTIVAL WALK</div><h2>다이얼로 일정을 담으며<br>축제를 걸어보세요.</h2></div>
+      <div><div class="no">04 — FESTIVAL WALK</div><h2>다이얼로 일정을 담으며<br>축제를 걸어보세요.</h2></div>
       <p>손에 든 휴대폰 뒷면의 다이얼을 돌려 프로그램을 고르고, 일정에 담아보세요. 담은 구역 위로는 빛기둥이 솟아 길을 안내하고, 도착하면 체크돼요.</p>
     </div>
     <div class="fest reveal" id="festStage" tabindex="-1">

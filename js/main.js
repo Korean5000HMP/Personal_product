@@ -402,6 +402,17 @@
   new IntersectionObserver(function(es){showCoach(es[0].isIntersecting)},{threshold:.35}).observe(explore);
 
 
+  // ── 시나리오 영상: media/scenario.mp4 가 있으면 자리표시를 숨기고, 화면에 보일 때 소리 없이 재생 ──
+  (function(){
+    var v=document.getElementById('scVideo'),fr=document.getElementById('scFrame'),snd=document.getElementById('scSound');
+    if(!v)return;
+    function ready(){fr.classList.add('has-video');snd.hidden=false}
+    v.addEventListener('loadeddata',ready);if(v.readyState>=2)ready();
+    new IntersectionObserver(function(es){if(!fr.classList.contains('has-video'))return;
+      if(es[0].isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()},{threshold:.4}).observe(fr);
+    snd.addEventListener('click',function(){v.muted=false;v.loop=false;v.controls=true;v.currentTime=0;v.play();snd.hidden=true});
+  })();
+
   // ════════════════════════════════════════════════════
   // 축제장 걷기 (1인칭): WASD · 마우스 시선 · 손에 든 폰의 다이얼로 일정 담기
   // ════════════════════════════════════════════════════
@@ -468,7 +479,9 @@
       var mon=root.clone(true),Hold=root.constructor,holder=new Hold(),S=215;
       mon.scale.set(S,S,S);mon.rotation.set(Math.PI/2,0,0);mon.position.set(-0.005*S,-0.0098*S,-0.0068*S);
       holder.position.set(0,5.45,0);holder.add(mon);fw.anchor.add(holder);
-      fw.mon=holder;fw.monPivot=mon.getObjectByName('purple_pivot');fw.sc.queueRender();
+      fw.mon=holder;fw.monPivot=mon.getObjectByName('purple_pivot');
+      fw.monLens=liquidLens(mon);   // 조형물 유리판 돋보기도 다이얼 회전에 맞춰 바뀌도록
+      fw.sc.queueRender();
     });
   }
 
@@ -832,7 +845,7 @@
     // 폰 흔들림 (CSS 변환이라 가벼움)
     var sx=Math.sin(F.phase)*10*mv,sy=Math.abs(Math.cos(F.phase))*9*mv+Math.sin(now/900)*2*(1-mv);
     fPhone.style.transform='translate('+sx.toFixed(1)+'px,'+sy.toFixed(1)+'px) rotate('+(-4+Math.sin(F.phase)*1.2*mv).toFixed(2)+'deg)';
-    if(fw.mon){fw.mon.rotation.y+=dt*0.25;if(fw.monPivot)fw.monPivot.rotation.y-=dt*0.6}
+    if(fw.mon){fw.mon.rotation.y+=dt*0.25;if(fw.monPivot){fw.monPivot.rotation.y-=dt*0.6;if(fw.monLens)fw.monLens.uAng.value=fw.monPivot.rotation.y}}
     animateSinger(now);animateFinale(now);
     if(frameN%4===0)setZone(zoneAt());
     placeCam(bob);fw.sc.queueRender();
