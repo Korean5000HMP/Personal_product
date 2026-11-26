@@ -10,7 +10,7 @@
   // - 컴퓨터에서 index.html 을 더블클릭해 열었을 때(file://): 브라우저 보안 때문에 .glb 를
   //   직접 못 읽어서, 같은 모델을 담은 media/object-data.js 를 대신 사용
   function setModel(src){story.setAttribute('src',src);explore.setAttribute('src',src)}
-  if(location.protocol==='file:'){
+  if(true){ // 공유 페이지에서는 .glb 대신 data.js 사용
     var s=document.createElement('script');s.src='media/object-data.js';
     s.onload=function(){setModel('data:model/gltf-binary;base64,'+window.GO_MODEL_B64)};
     s.onerror=function(){err.hidden=false};
@@ -20,7 +20,7 @@
   }
   // 축제장 3D 공간도 같은 방식으로 연결
   var festEl=document.getElementById('fest-model');
-  if(location.protocol==='file:'){
+  if(true){ // 공유 페이지에서는 .glb 대신 data.js 사용
     var s2=document.createElement('script');s2.src='media/festival-data.js';
     s2.onload=function(){festEl.setAttribute('src','data:model/gltf-binary;base64,'+window.GO_FEST_B64)};
     document.head.appendChild(s2);
@@ -29,7 +29,7 @@
   }
   // 1인칭으로 손에 든 휴대폰
   var phEl=document.getElementById('phone-model');
-  if(location.protocol==='file:'){
+  if(true){ // 공유 페이지에서는 .glb 대신 data.js 사용
     var s3=document.createElement('script');s3.src='media/phone-data.js';
     s3.onload=function(){phEl.setAttribute('src','data:model/gltf-binary;base64,'+window.GO_PHONE_B64)};
     document.head.appendChild(s3);
@@ -49,7 +49,7 @@
   var sec=document.getElementById('story'),chs=[].slice.call(document.querySelectorAll('.ch')),
       bars=[].slice.call(document.querySelectorAll('#progress i')),hud=document.getElementById('hudLabel'),
       bw=document.getElementById('bigword');
-  var labels=['01 / FESTIVAL OBJECT','02 / TOP VIEW','03 / SIDE VIEW','04 / PURPLE × SILVER'];
+  var labels=['01 / FESTIVAL OBJECT','02 / TOP VIEW','03 / SIDE VIEW','04 / TIME DIAL'];
   var cur=-1,spin=0,last=performance.now();
   function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
   function frame(now){
