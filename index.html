@@ -34,6 +34,7 @@
     <a href="#festival">축제장 걷기</a>
     <a href="#explore" class="cta">3D 체험 ↗</a>
   </nav>
+  <button class="menu-btn" id="menuBtn" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span></button>
 </header>
 
 <main id="top">
@@ -102,7 +103,7 @@
   <section class="block" id="scenario">
     <div class="sec-head reveal">
       <div><div class="no">01 — SCENARIO</div><h2>축제에서,<br>이렇게 씁니다.</h2></div>
-      <p>휴대폰 뒷면에 붙인 다이얼을 돌려 보고 싶은 프로그램을 고르고, 일정에 담고, 축제장을 찾아가는 하루를 영상으로 담았습니다.</p>
+      <p>휴대폰 뒷면에 붙인 다이얼을 돌려 보고 싶은 프로그램을 고르면, 일정이 시간순으로 정리되고 그대로 축제를 즐기면 돼요. 그 하루를 영상으로 담았습니다.</p>
     </div>
     <div class="sc-frame reveal" id="scFrame">
       <video id="scVideo" muted playsinline loop preload="metadata" poster="media/scenario-poster.jpg">
@@ -119,10 +120,10 @@
       <button class="sc-sound" id="scSound" hidden>소리 켜고 처음부터 ▶</button>
     </div>
     <ol class="sc-steps reveal">
-      <li><span>01</span><b>휴대폰에 붙이기</b><p>오브제를 휴대폰 뒷면에 붙이면 축제 준비 끝.</p></li>
-      <li><span>02</span><b>실버 다이얼로 고르기</b><p>돌릴 때마다 아이콘 불빛이 하나씩 켜지며 프로그램을 골라요.</p></li>
-      <li><span>03</span><b>유리판으로 시간 확인</b><p>유리판이 시작 시간으로 움직여 숫자를 크게 보여줘요.</p></li>
-      <li><span>04</span><b>일정에 담고 찾아가기</b><p>담은 일정을 따라 축제장을 둘러봐요.</p></li>
+      <li><span>01</span><b>다이얼을 붙이고 입장</b><p>휴대폰 뒷면에 다이얼을 붙이고 강남페스티벌로 들어서요.</p></li>
+      <li><span>02</span><b>다이얼로 프로그램 고르기</b><p>실버 다이얼을 돌리면 아이콘 불빛이 켜지며 프로그램이 선택돼요.</p></li>
+      <li><span>03</span><b>AI 일정 정렬</b><p>고른 프로그램이 시간순으로 정리되어 '선택한 일정'이 완성돼요.</p></li>
+      <li><span>04</span><b>시간 맞춰 즐기기</b><p>정리된 일정을 따라 무대 앞으로, 축제를 즐겨요.</p></li>
     </ol>
   </section>
 
@@ -230,7 +231,7 @@
       <div class="f-cross" aria-hidden="true"></div>
       <div class="f-hud f-zone"><span class="f-dot"></span><b id="fZone">입구</b></div>
       <div class="f-sched" id="fSched">
-        <div class="f-sched-h">선택한 일정 <span id="fSchedN">0</span></div>
+        <div class="f-sched-h">선택한 일정 <span id="fSchedN">0</span><em class="f-sched-st" id="fSchedSt">스탬프 0/6</em></div>
         <ol id="fSchedList"></ol>
         <p class="f-sched-e" id="fSchedE">다이얼로 프로그램을 골라<br>일정에 담아보세요</p>
         <div class="f-stamps"><div class="f-stamps-h">스탬프 투어 <span id="fStampN">0 / 6</span></div><div class="f-stamp-row" id="fStampRow"></div></div>
@@ -245,6 +246,7 @@
         <div class="f-pick-t"><small id="fPickTime">10.03 (금) · 19:00</small><b id="fPickName">패밀리 콘서트</b><span id="fPickAct">클릭해서 일정에 담기</span><em id="fPickWarn" hidden></em></div>
       </div>
       <div class="f-toast" id="fToast" hidden></div>
+      <button class="f-exit" id="fExit" aria-label="축제장에서 나가기">✕</button>
       <div class="f-help" id="fHelp"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 이동</span><span>마우스 시선</span><span><kbd>휠</kbd> 또는 <kbd>Q</kbd><kbd>E</kbd> 실버 다이얼</span><span><kbd>R</kbd><kbd>F</kbd> 보라 다이얼</span><span><kbd>클릭</kbd> 일정 담기/빼기</span><span><kbd>Tab</kbd> 폰 들기</span><span><kbd>Esc</kbd> 마우스 풀기</span></div>
       <div class="f-lock" id="fLock" hidden>클릭하면 마우스로 시선을 돌릴 수 있어요</div>
       <div class="f-joy" id="fJoy" hidden><div class="f-knob" id="fKnob"></div></div>

@@ -39,8 +39,10 @@
   document.getElementById('reload').onclick=function(){location.reload()};
   setTimeout(function(){if(!customElements.get('model-viewer'))err.hidden=false},15000);
 
-  // 헤더
-  var hdr=document.getElementById('hdr');
+  // 헤더 + 모바일 메뉴
+  var hdr=document.getElementById('hdr'),menuBtn=document.getElementById('menuBtn');
+  menuBtn.addEventListener('click',function(){var o=!hdr.classList.contains('menu-open');hdr.classList.toggle('menu-open',o);menuBtn.setAttribute('aria-expanded',o);menuBtn.setAttribute('aria-label',o?'메뉴 닫기':'메뉴 열기')});
+  [].forEach.call(document.querySelectorAll('nav a'),function(a){a.addEventListener('click',function(){hdr.classList.remove('menu-open');menuBtn.setAttribute('aria-expanded','false')})});
 
   // 스크롤 스토리: 카메라 키프레임 [theta, phi, radius%, 모델 x위치%]
   var K=[[35,62,108,62],[0,0.01,150,62],[0,88,104,62],[-50,68,112,62]];
@@ -559,7 +561,7 @@
     fPick.classList.toggle('in',!!inS);
     var w=$('fPickWarn'),cl=p?clashOf(p.id):[];
     if(cl.length){w.hidden=false;w.textContent=(inS?'':'담으면 ')+cl.map(function(o){return ZINFO[o].name}).join(', ')+'와(과) 시간이 겹쳐요'}else w.hidden=true;
-    var mb=fStage.querySelector('.f-add');if(mb)mb.textContent=inS?'일정 빼기':'일정 담기';
+    var mb=fStage.querySelector('.f-add');if(mb){mb.textContent=inS?'일정 빼기':'일정 담기';mb.classList.toggle('on',!!inS)}
     signs.forEach(function(s){s.classList.toggle('aim',p&&s.dataset.zone===p.id)});
     if(!silent){fPick.classList.remove('bump');void fPick.offsetWidth;fPick.classList.add('bump')}
   }
@@ -607,12 +609,25 @@
   function enter(){
     if(!F.ready||!F.phoneReady)return;
     F.active=true;fStart.classList.add('hide');fStage.classList.add('playing');fStage.focus({preventScroll:true});
+    if(coarse||innerWidth<=900)openFS();
     if(coarse){fJoy.hidden=false;$('fMbtn').hidden=false}else requestLock();
     if(soundOn)audio();
     renderSched();updatePick(true);toast('휠을 굴려 다이얼을 돌리고, 클릭해서 일정에 담아보세요');
     lastF=0;requestAnimationFrame(festLoop);
   }
   fEnter.addEventListener('click',enter);
+  // 휴대폰: 입장하면 화면 전체를 쓰는 게임 모드, ✕로 나가기
+  var fsScroll=0;
+  function openFS(){fsScroll=scrollY;fStage.classList.add('fs');document.documentElement.classList.add('fest-open');$('fSched').classList.remove('open');phoneEl.cameraOrbit='4deg 18deg 0.17m';phoneEl.cameraTarget='0.002m 0.004m 0.022m';if(phoneEl.jumpCameraToGoal)phoneEl.jumpCameraToGoal()}
+  function closeFS(){
+    fStage.classList.remove('fs','playing','raise');document.documentElement.classList.remove('fest-open');phoneEl.cameraOrbit='5deg 20deg 0.25m';phoneEl.cameraTarget='0.003m 0.004m 0.02m';
+    F.active=false;keys={};joyEnd();fJoy.hidden=true;$('fMbtn').hidden=true;
+    fStart.classList.remove('hide');fEnter.textContent='이어서 하기';
+    if(document.pointerLockElement)document.exitPointerLock();
+    scrollTo(0,fsScroll);
+  }
+  $('fExit').addEventListener('click',closeFS);
+  $('fSched').addEventListener('click',function(){if(fStage.classList.contains('fs'))this.classList.toggle('open')});
   var lockFailed=false;
   function lockFail(){lockFailed=true;fLock.hidden=false;fLock.textContent='드래그해서 시선을 돌리고, Space로 일정을 담아요'}
   function requestLock(){try{var p=fest.requestPointerLock&&fest.requestPointerLock();if(p&&p.catch)p.catch(lockFail)}catch(_){lockFail()}}
@@ -731,7 +746,7 @@
   stampRow.innerHTML=STAMP_ORDER.map(function(id){return '<i data-z="'+id+'" title="'+ZINFO[id].name+'"><svg><use href="#i-'+ZINFO[id].icon+'"/></svg></i>'}).join('');
   function renderStamps(){
     [].forEach.call(stampRow.children,function(el){el.classList.toggle('on',!!STAMPS[el.dataset.z])});
-    $('fStampN').textContent=Object.keys(STAMPS).length+' / 6';
+    $('fStampN').textContent=Object.keys(STAMPS).length+' / 6';$('fSchedSt').textContent='스탬프 '+Object.keys(STAMPS).length+'/6';
   }
   // ── 나침반: 담은 일정 중 아직 안 간 가장 이른 프로그램으로 안내 ──
   var fNav=$('fNav'),fNavAr=$('fNavAr'),navId='';

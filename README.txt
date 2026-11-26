@@ -41,7 +41,7 @@ assets/views.png        4면 렌더링 이미지
 - 프로그램 이름·날짜·시간은 js/main.js 의 ZINFO 목록에서 수정
 
 [시나리오 영상 넣기]
-- media 폴더에 scenario.mp4 (H.264, 10~20MB 권장)를 넣으면 '01 — SCENARIO' 자리에 자동으로 나와요
+- media/scenario.mp4 가 '01 — SCENARIO' 자리에 나와요 (원본 4K 영상을 1920px, 8MB로 줄인 웹용). 바꾸려면 같은 이름으로 교체
 - 대표 이미지는 media/scenario-poster.jpg (없어도 됨)
 - 화면에 보이면 소리 없이 반복 재생, '소리 켜고 처음부터' 버튼으로 처음부터 소리와 함께 재생
 - 영상 아래 4단계 설명 문구는 index.html 의 sc-steps 부분에서 수정
