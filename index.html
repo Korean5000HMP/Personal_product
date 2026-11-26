@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0c0711">
 <meta name="description" content="강남페스티벌을 담은 하나의 오브제. 보라색과 실버로 완성한 개인 제품 디자인 포트폴리오.">
 <title>GANGNAM OBJECT — 강남페스티벌</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,47 +22,6 @@
     <symbol id="i-shirt" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M17 6l-12 7 5 9 5-3v23h18V19l5 3 5-9-12-7c-1 4-4 6-7 6s-6-2-7-6z"/></symbol>
   </defs>
 </svg>
-
-<!-- 진입 다이얼 연출 (js/intro.js) -->
-<div id="intro" role="dialog" aria-label="GANGNAM OBJECT 불러오는 중">
-  <div class="intro-glow"></div>
-  <div class="intro-dial">
-    <svg viewBox="0 0 400 400" aria-hidden="true">
-      <defs>
-        <linearGradient id="introSilver" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#f4f2f7"/><stop offset=".45" stop-color="#8f8a97"/><stop offset=".7" stop-color="#e6e3ea"/><stop offset="1" stop-color="#6f6a78"/>
-        </linearGradient>
-        <radialGradient id="introPurple" cx=".38" cy=".32" r=".8">
-          <stop offset="0" stop-color="#9a6ad0"/><stop offset=".55" stop-color="#5a2f8c"/><stop offset="1" stop-color="#2a1442"/>
-        </radialGradient>
-      </defs>
-      <circle cx="200" cy="200" r="194" class="intro-halo"/>
-      <circle cx="200" cy="200" r="146" pathLength="1" class="intro-trace" transform="rotate(-90 200 200)"/>
-      <g id="introRing" class="intro-rot">
-        <circle cx="200" cy="200" r="168" fill="none" stroke="url(#introSilver)" stroke-width="40" opacity=".16"/>
-        <circle cx="200" cy="200" r="188" fill="none" stroke="url(#introSilver)" stroke-width="1.4"/>
-        <circle cx="200" cy="200" r="124" fill="none" stroke="url(#introSilver)" stroke-width="1"/>
-        <g id="introTicks" class="intro-ticks"></g>
-      </g>
-      <g id="introInner" class="intro-rot">
-        <circle cx="200" cy="200" r="104" fill="url(#introPurple)"/>
-        <circle cx="200" cy="200" r="104" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1"/>
-      </g>
-      <line x1="200" y1="128" x2="200" y2="98" class="intro-hand"/>
-      <circle cx="200" cy="200" r="70" class="intro-glass"/>
-      <path d="M200 4 l-7 -12 h14z" transform="translate(0 12)" class="intro-pointer"/>
-    </svg>
-    <div class="intro-center">
-      <small id="introDate">10.03 (금) · DAY 1</small>
-      <b id="introNum">16:00</b>
-      <span id="introLabel">FESTIVAL START</span>
-    </div>
-  </div>
-  <ol class="intro-list" id="introList" aria-hidden="true"></ol>
-  <p class="intro-hint" id="introHint">이틀간의 축제가 하나의 다이얼이 됐어요 · 클릭하거나 스크롤해서 입장</p>
-  <div class="intro-meta"><span>GANGNAM OBJECT</span><span>PRODUCT DESIGN 2026</span></div>
-  <button class="intro-skip" id="introSkip" type="button">건너뛰기</button>
-</div>
 
 <header id="hdr">
   <a class="brand" href="#top">G/O <small>GANGNAM OBJECT</small></a>
@@ -171,13 +130,13 @@
   <section class="block" id="scenes">
     <div class="sec-head reveal">
       <div><div class="no">02 — PROGRAM</div><h2>링 위의 아이콘,<br>이틀간의 프로그램.</h2></div>
-      <p>오브제 상단의 은빛 링에 새겨진 아이콘은 강남페스티벌의 프로그램을 하나씩 가리킵니다. 10월 3일과 4일, 이틀 동안 이어지는 축제의 시간표를 하나의 원 안에 담았습니다.<br><b class="tt-hint">프로그램을 누르면 3D 오브제에서 그 아이콘이 켜지고, 유리판이 시작 시간으로 움직여요.</b></p>
+      <p>오브제 상단의 은빛 링에 새겨진 아이콘은 강남페스티벌의 프로그램을 하나씩 가리킵니다. 10월 3일과 4일, 이틀 동안 이어지는 축제의 시간표를 하나의 원 안에 담았습니다.</p>
     </div>
     <div class="timetable reveal">
       <div class="day"><span>DAY 1</span><b>10.03<small>금요일</small></b></div>
-      <div class="scene" role="button" tabindex="0" data-icon="2" data-hour="16" aria-label="그랜드 퍼레이드 — 3D 오브제에서 보기"><span class="go">3D로 보기 ↘</span><span class="n">16:00 – 18:00</span><svg><use href="#i-flag"/></svg><h3>그랜드 퍼레이드<small>GRAND PARADE</small></h3></div><div class="scene" role="button" tabindex="0" data-icon="6" data-hour="19" aria-label="패밀리 콘서트 — 3D 오브제에서 보기"><span class="go">3D로 보기 ↘</span><span class="n">19:00 – 21:30</span><svg><use href="#i-music"/></svg><h3>패밀리 콘서트<small>FAMILY CONCERT</small></h3></div><div class="scene" role="button" tabindex="0" data-icon="0" data-hour="21.5" aria-label="EDM 파티 — 3D 오브제에서 보기"><span class="go">3D로 보기 ↘</span><span class="n">21:30 – 22:30</span><svg><use href="#i-sound"/></svg><h3>EDM 파티<small>EDM PARTY</small></h3></div>
+      <div class="scene"><span class="n">16:00 – 18:00</span><svg><use href="#i-flag"/></svg><h3>그랜드 퍼레이드<small>GRAND PARADE</small></h3></div><div class="scene"><span class="n">19:00 – 21:30</span><svg><use href="#i-music"/></svg><h3>패밀리 콘서트<small>FAMILY CONCERT</small></h3></div><div class="scene"><span class="n">21:30 – 22:30</span><svg><use href="#i-sound"/></svg><h3>EDM 파티<small>EDM PARTY</small></h3></div>
       <div class="day"><span>DAY 2</span><b>10.04<small>토요일</small></b></div>
-      <div class="scene" role="button" tabindex="0" data-icon="5" data-hour="13" aria-label="패션 · 뷰티 페스타 — 3D 오브제에서 보기"><span class="go">3D로 보기 ↘</span><span class="n">13:00 – 17:00</span><svg><use href="#i-shirt"/></svg><h3>패션 · 뷰티 페스타<small>FASHION &amp; BEAUTY</small></h3></div><div class="scene" role="button" tabindex="0" data-icon="4" data-hour="14" aria-label="글로벌 푸드 경연대회 — 3D 오브제에서 보기"><span class="go">3D로 보기 ↘</span><span class="n">14:00 – 15:00</span><svg><use href="#i-food"/></svg><h3>글로벌 푸드 경연대회<small>GLOBAL FOOD CONTEST</small></h3></div><div class="scene" role="button" tabindex="0" data-icon="1" data-hour="18" aria-label="K-POP 콘서트 — 3D 오브제에서 보기"><span class="go">3D로 보기 ↘</span><span class="n">18:00 – 21:00</span><svg><use href="#i-spark"/></svg><h3>K-POP 콘서트<small>K-POP CONCERT</small></h3></div>
+      <div class="scene"><span class="n">13:00 – 17:00</span><svg><use href="#i-shirt"/></svg><h3>패션 · 뷰티 페스타<small>FASHION &amp; BEAUTY</small></h3></div><div class="scene"><span class="n">14:00 – 15:00</span><svg><use href="#i-food"/></svg><h3>글로벌 푸드 경연대회<small>GLOBAL FOOD CONTEST</small></h3></div><div class="scene"><span class="n">18:00 – 21:00</span><svg><use href="#i-spark"/></svg><h3>K-POP 콘서트<small>K-POP CONCERT</small></h3></div>
     </div>
   </section>
 
@@ -270,6 +229,7 @@
         <div class="zsign zs-gate" slot="hotspot-z-gate" data-zone="gate" data-position="0 10 52">강남페스티벌 입구</div>
       </model-viewer>
       <div class="f-cross" aria-hidden="true"></div>
+      <div class="f-aim" id="fAim" hidden></div>
       <div class="f-hud f-zone"><span class="f-dot"></span><b id="fZone">입구</b></div>
       <div class="f-sched" id="fSched">
         <div class="f-sched-h">선택한 일정 <span id="fSchedN">0</span><em class="f-sched-st" id="fSchedSt">스탬프 0/6</em></div>
@@ -280,7 +240,7 @@
       <div class="f-nav" id="fNav" hidden><svg class="f-nav-ar" id="fNavAr" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l7.5 17.5-7.5-4.2-7.5 4.2z"/></svg><div><small>다음 일정 안내</small><b id="fNavName"></b><span id="fNavMeta"></span></div></div>
       <canvas class="f-map" id="fMap" width="320" height="320" aria-label="축제장 미니맵"></canvas>
       <div class="f-phone" id="fPhone" aria-hidden="true">
-        <model-viewer id="phone-model" camera-target="0.003m 0.004m 0.02m" camera-orbit="5deg 20deg 0.25m" min-camera-orbit="auto auto 0.05m" field-of-view="24deg" exposure="1.3" tone-mapping="neutral" environment-image="neutral" shadow-intensity="0" interaction-prompt="none" loading="lazy" disable-tap></model-viewer>
+        <model-viewer id="phone-model" camera-target="0.003m 0.004m 0.02m" camera-orbit="5deg 20deg 0.75m" min-camera-orbit="auto auto 0.05m" max-camera-orbit="auto auto 5m" field-of-view="8deg" min-field-of-view="3deg" exposure="1.3" tone-mapping="neutral" environment-image="neutral" shadow-intensity="0" interaction-prompt="none" loading="lazy" disable-tap></model-viewer>
       </div>
       <div class="f-pick" id="fPick">
         <div class="f-pick-ic"><svg><use id="fPickUse" href="#i-music"/></svg></div>
@@ -342,7 +302,6 @@
 
 <p id="error" hidden>3D 화면을 불러오지 못했어요. Chrome 또는 Edge에서 열고 <button id="reload">다시 시도</button>해 주세요.</p>
 
-<script src="js/intro.js"></script>
 <script src="js/model-viewer.min.js"></script>
 <script src="js/main.js"></script>
 </body>

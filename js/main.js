@@ -10,7 +10,7 @@
   // - 컴퓨터에서 index.html 을 더블클릭해 열었을 때(file://): 브라우저 보안 때문에 .glb 를
   //   직접 못 읽어서, 같은 모델을 담은 media/object-data.js 를 대신 사용
   function setModel(src){story.setAttribute('src',src);explore.setAttribute('src',src)}
-  if(true){ // 공유 페이지에서는 .glb 대신 data.js 사용
+  if(location.protocol==='file:'){
     var s=document.createElement('script');s.src='media/object-data.js';
     s.onload=function(){setModel('data:model/gltf-binary;base64,'+window.GO_MODEL_B64)};
     s.onerror=function(){err.hidden=false};
@@ -20,7 +20,7 @@
   }
   // 축제장 3D 공간도 같은 방식으로 연결
   var festEl=document.getElementById('fest-model');
-  if(true){ // 공유 페이지에서는 .glb 대신 data.js 사용
+  if(location.protocol==='file:'){
     var s2=document.createElement('script');s2.src='media/festival-data.js';
     s2.onload=function(){festEl.setAttribute('src','data:model/gltf-binary;base64,'+window.GO_FEST_B64)};
     document.head.appendChild(s2);
@@ -29,7 +29,7 @@
   }
   // 1인칭으로 손에 든 휴대폰
   var phEl=document.getElementById('phone-model');
-  if(true){ // 공유 페이지에서는 .glb 대신 data.js 사용
+  if(location.protocol==='file:'){
     var s3=document.createElement('script');s3.src='media/phone-data.js';
     s3.onload=function(){phEl.setAttribute('src','data:model/gltf-binary;base64,'+window.GO_PHONE_B64)};
     document.head.appendChild(s3);
@@ -347,16 +347,6 @@
     kick();
     var ro=document.querySelector('.readout');ro.classList.remove('flash');void ro.offsetWidth;ro.classList.add('flash');
   }
-  [].forEach.call(document.querySelectorAll('.timetable .scene[data-icon]'),function(card){
-    function go(){
-      var idx=+card.dataset.icon,hour=+card.dataset.hour;
-      document.getElementById('explore').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
-      if(soundOn)audio();
-      if(rig)setTimeout(function(){goToProgram(idx,hour)},reduce?0:700);else pendingCard=[idx,hour];
-    }
-    card.addEventListener('click',go);
-    card.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
-  });
   [].forEach.call(document.querySelectorAll('.pg'),function(p){p.addEventListener('click',function(){
     if(soundOn)audio();
     if(rig)goToProgram(+p.dataset.icon,+p.dataset.hour);else pendingCard=[+p.dataset.icon,+p.dataset.hour];
@@ -418,7 +408,7 @@
   // ════════════════════════════════════════════════════
   // 축제장 걷기 (1인칭): WASD · 마우스 시선 · 손에 든 폰의 다이얼로 일정 담기
   // ════════════════════════════════════════════════════
-  var FEST={"coll":[["circ",0,0,8.4],["box",12.364,4.017,1.1,0.3,1.2566],["box",-12.364,4.017,1.1,0.3,-1.2566],["box",-12.364,-4.017,1.1,0.3,-1.885],["box",-0.0,-13.0,1.1,0.3,-3.1416],["box",12.364,-4.017,1.1,0.3,1.885],["circ",8.639,9.028,0.28],["circ",8.917,-4.352,0.28],["circ",-8.46,-8.103,0.28],["circ",9.213,10.842,0.28],["circ",5.179,-11.7,0.28],["circ",-11.556,1.211,0.28],["circ",4.701,-13.932,0.28],["circ",12.895,7.417,0.28],["circ",-4.982,-9.484,0.28],["circ",3.531,11.023,0.28],["circ",-3.77,-10.902,0.28],["circ",-13.206,3.437,0.28],["circ",7.354,-10.753,0.28],["circ",4.51,8.528,0.28],["circ",9.721,9.985,0.28],["circ",7.645,-5.907,0.28],["circ",-6.709,19.221,0.2],["circ",-13.291,15.421,0.2],["circ",-7.581,17.373,0.28],["circ",-11.761,22.858,0.28],["circ",-20.0,3.8,0.2],["circ",-20.0,-3.8,0.2],["circ",-26.805,-1.94,0.28],["circ",-24.719,2.024,0.28],["circ",-13.291,-15.421,0.2],["circ",-6.709,-19.221,0.2],["circ",-8.787,-18.258,0.28],["circ",-11.044,-21.603,0.28],["circ",6.709,-19.221,0.2],["circ",13.291,-15.421,0.2],["circ",10.46,-21.253,0.28],["circ",10.646,-22.528,0.28],["circ",20.0,-3.8,0.2],["circ",20.0,3.8,0.2],["circ",26.989,-1.566,0.28],["circ",25.833,0.6,0.28],["circ",13.291,15.421,0.2],["circ",6.709,19.221,0.2],["circ",8.931,16.446,0.28],["circ",10.977,20.218,0.28],["circ",3.8,20.0,0.2],["circ",-3.8,20.0,0.2],["circ",3.8,27.0,0.2],["circ",-3.8,27.0,0.2],["circ",3.8,34.0,0.2],["circ",-3.8,34.0,0.2],["circ",3.8,41.0,0.2],["circ",-3.8,41.0,0.2],["circ",3.8,48.0,0.2],["circ",-3.8,48.0,0.2],["circ",1.625,29.97,0.28],["circ",1.821,21.932,0.28],["circ",-0.881,48.847,0.28],["circ",0.154,22.894,0.28],["circ",-1.34,42.434,0.28],["circ",1.593,26.472,0.28],["circ",-0.465,27.718,0.28],["circ",-1.033,30.147,0.28],["circ",-0.234,32.114,0.28],["box",-20.5,-35.507,10.0,4.0,0.5236],["box",-29.507,-30.307,0.3,0.3,0.5236],["box",-11.493,-40.707,0.3,0.3,0.5236],["box",-29.825,-26.659,0.8,0.7,0.5236],["box",-8.175,-39.159,0.8,0.7,0.5236],["circ",-9.308,-32.421,0.28],["circ",-15.912,-29.23,0.28],["circ",-9.209,-26.125,0.28],["circ",-7.812,-27.193,0.28],["circ",-13.257,-27.887,0.28],["circ",-17.833,-26.971,0.28],["circ",-10.968,-25.471,0.28],["circ",-10.793,-28.314,0.28],["circ",-20.97,-21.448,0.28],["circ",-10.511,-25.195,0.28],["circ",-10.703,-31.503,0.28],["circ",-18.281,-27.287,0.28],["circ",-15.701,-25.661,0.28],["circ",-19.615,-21.659,0.28],["circ",-14.336,-25.792,0.28],["circ",-13.125,-23.141,0.28],["circ",-23.672,-24.391,0.28],["circ",-9.588,-32.738,0.28],["circ",-15.739,-28.486,0.28],["circ",-18.202,-21.577,0.28],["circ",-18.85,-25.44,0.28],["circ",-11.086,-28.253,0.28],["circ",-9.371,-24.305,0.28],["circ",-20.32,-23.604,0.28],["circ",-22.846,-24.998,0.28],["circ",-15.472,-22.921,0.28],["circ",-23.501,-24.698,0.28],["circ",-7.571,-25.859,0.28],["circ",-7.33,-25.867,0.28],["circ",-11.666,-28.572,0.28],["circ",-15.297,-29.052,0.28],["circ",-8.536,-25.298,0.28],["circ",-18.773,-19.507,0.28],["circ",-7.49,-28.871,0.28],["circ",-17.883,-26.666,0.28],["circ",-12.201,-28.636,0.28],["circ",-14.922,-25.919,0.28],["circ",-19.717,-22.798,0.28],["circ",-8.355,-29.345,0.28],["circ",-19.257,-22.077,0.28],["circ",-22.109,-25.619,0.28],["circ",-13.45,-26.124,0.28],["circ",-6.945,-26.024,0.28],["circ",-14.984,-25.193,0.28],["circ",-18.063,-27.87,0.28],["circ",-20.372,-26.65,0.28],["box",20.5,-35.507,6.5,3.25,-0.5236],["circ",13.477,-30.844,0.28],["circ",16.075,-29.344,0.28],["circ",17.375,-28.594,0.28],["circ",18.674,-27.844,0.28],["circ",19.973,-27.094,0.28],["circ",21.272,-26.344,0.28],["box",16.75,-29.012,6.0,0.3,-0.5236],["circ",11.378,-30.208,0.28],["circ",15.275,-27.958,0.28],["circ",16.575,-27.208,0.28],["circ",17.874,-26.458,0.28],["box",15.95,-27.626,6.0,0.3,-0.5236],["circ",13.176,-27.322,0.28],["circ",14.475,-26.572,0.28],["box",15.15,-26.241,6.0,0.3,-0.5236],["circ",9.778,-27.437,0.28],["circ",11.077,-26.687,0.28],["circ",12.376,-25.937,0.28],["circ",14.975,-24.437,0.28],["circ",16.274,-23.687,0.28],["circ",18.872,-22.187,0.28],["box",14.35,-24.855,6.0,0.3,-0.5236],["box",12.618,-37.055,0.6,0.5,-0.5236],["box",25.782,-29.455,0.6,0.5,-0.5236],["box",41.0,-0.0,7.0,3.5,-1.5708],["box",40.0,-8.6,1.1,1.0,-1.5708],["box",40.0,8.6,1.1,1.0,-1.5708],["circ",33.266,-2.928,0.28],["circ",32.583,4.039,0.28],["circ",29.111,-2.521,0.28],["circ",33.311,-1.442,0.28],["circ",31.468,-2.85,0.28],["circ",30.678,-2.654,0.28],["circ",32.144,-4.173,0.28],["circ",27.651,5.152,0.28],["circ",29.177,2.542,0.28],["circ",29.184,-2.037,0.28],["circ",27.145,5.669,0.28],["circ",27.498,-1.37,0.28],["circ",27.434,0.211,0.28],["circ",28.781,1.523,0.28],["circ",32.103,6.002,0.28],["circ",28.939,1.852,0.28],["circ",26.819,-1.661,0.28],["circ",31.596,-3.139,0.28],["circ",29.039,4.788,0.28],["circ",29.24,3.542,0.28],["circ",28.741,-0.671,0.28],["circ",29.942,2.295,0.28],["circ",26.764,6.322,0.28],["circ",31.788,-4.354,0.28],["circ",26.5,-6.26,0.28],["circ",27.927,-0.591,0.28],["circ",32.769,0.459,0.28],["circ",29.187,-2.282,0.28],["circ",33.409,4.307,0.28],["circ",28.747,4.752,0.28],["box",-35.5,0.0,1.6,8.5,1.5708],["box",-44.6,0.0,5.5,0.3,1.5708],["box",-41.0,6.2,0.4,1.3,1.5708],["box",-35.0,6.2,0.4,1.3,1.5708],["box",-29.0,6.2,0.4,1.3,1.5708],["box",-41.0,-6.2,0.4,1.3,1.5708],["box",-35.0,-6.2,0.4,1.3,1.5708],["box",-29.0,-6.2,0.4,1.3,1.5708],["circ",-38.361,-4.348,0.28],["circ",-30.041,3.894,0.28],["circ",-37.682,-2.687,0.28],["circ",-33.269,4.32,0.28],["circ",-27.292,-3.231,0.28],["circ",-34.049,2.902,0.28],["circ",-41.378,-3.875,0.28],["circ",-31.948,4.351,0.28],["circ",-39.896,-4.139,0.28],["circ",-28.85,3.429,0.28],["circ",-31.33,-4.209,0.28],["circ",-40.68,4.444,0.28],["circ",-31.703,-4.414,0.28],["circ",-35.276,2.805,0.28],["circ",-37.908,-3.777,0.28],["circ",-40.394,3.148,0.28],["circ",-37.835,-2.903,0.28],["circ",-29.354,3.261,0.28],["circ",-39.292,-3.051,0.28],["circ",-27.611,4.48,0.28],["circ",-33.708,-4.475,0.28],["circ",-36.062,4.214,0.28],["box",24.6,28.579,1.4,0.4,-1.5708],["box",26.0,28.579,1.5,1.0,-1.5708],["circ",23.385,27.649,0.28],["circ",22.8,28.771,0.28],["box",23.9,31.873,1.4,0.4,-1.9897],["box",25.179,32.443,1.5,1.0,-1.9897],["circ",21.98,31.984,0.28],["circ",22.673,31.518,0.28],["box",21.92,34.598,1.4,0.4,-2.4086],["box",22.857,35.639,1.5,1.0,-2.4086],["circ",21.137,32.839,0.28],["circ",21.549,32.713,0.28],["box",19.003,36.282,1.4,0.4,-2.8274],["box",19.436,37.614,1.5,1.0,-2.8274],["circ",19.011,34.76,0.28],["circ",18.197,35.142,0.28],["box",15.653,36.634,1.4,0.4,3.0369],["box",15.507,38.027,1.5,1.0,3.0369],["circ",14.901,35.256,0.28],["circ",16.41,35.33,0.28],["box",12.45,35.594,1.4,0.4,2.618],["box",11.75,36.806,1.5,1.0,2.618],["circ",13.642,34.69,0.28],["circ",12.94,34.155,0.28],["box",18.964,24.847,1.0,0.4,-2.618],["circ",19.624,25.332,0.28],["box",14.75,25.548,1.0,0.4,-2.618],["circ",14.777,24.666,0.28],["box",12.036,28.847,1.0,0.4,-2.618],["circ",12.253,29.588,0.28],["circ",11.5,28.29,0.28],["box",15.155,21.85,1.0,0.4,-2.618],["circ",15.044,21.048,0.28],["box",11.345,24.05,1.0,0.4,-2.618],["circ",11.304,24.939,0.28],["circ",23.16,20.115,0.3],["circ",5.84,30.115,0.3],["box",-13.737,34.793,0.6,0.6,2.618],["box",-23.263,29.293,0.6,0.6,2.618],["circ",-13.773,42.855,0.3],["circ",-30.227,33.355,0.3],["circ",-29.351,35.048,0.28],["circ",-16.788,42.704,0.28],["circ",-29.229,34.617,0.28],["circ",-14.527,41.518,0.28],["circ",-11.973,39.737,0.3],["circ",-28.427,30.237,0.3],["circ",-27.567,31.941,0.28],["circ",-26.982,31.566,0.28],["circ",-13.867,38.942,0.28],["circ",-13.065,39.517,0.28],["circ",-10.173,36.62,0.3],["circ",-26.627,27.12,0.3],["circ",-24.724,28.95,0.28],["circ",-24.339,27.696,0.28],["circ",-25.769,28.169,0.28],["circ",-25.446,28.541,0.28],["circ",-8.373,33.502,0.3],["circ",-24.827,24.002,0.3],["circ",-24.351,25.787,0.28],["circ",-10.511,32.608,0.28],["circ",-23.432,25.163,0.28],["circ",-9.231,32.645,0.28],["circ",-6.573,30.384,0.3],["circ",-23.027,20.884,0.3],["circ",-7.22,29.154,0.28],["circ",-22.315,22.117,0.28],["circ",-20.982,22.468,0.28],["circ",-9.399,29.395,0.28],["circ",-4.773,27.267,0.3],["circ",-21.227,17.767,0.3],["circ",-19.131,17.988,0.28],["circ",-19.832,18.362,0.28],["circ",-7.227,27.083,0.28],["circ",-18.865,18.693,0.28],["box",-21.0,36.373,1.5,2.5,2.618],["box",-16.25,28.146,1.5,2.5,2.618],["box",-6.0,52.0,0.7,0.7,-0.0],["box",6.0,52.0,0.7,0.7,-0.0],["circ",59.426,2.974,0.5],["circ",60.629,11.446,0.5],["circ",60.592,20.294,0.5],["circ",53.321,26.403,0.5],["circ",51.05,34.653,0.5],["circ",47.491,42.753,0.5],["circ",38.388,45.46,0.5],["circ",33.017,52.122,0.5],["circ",26.526,58.134,0.5],["circ",17.098,56.99,0.5],["circ",-15.557,59.707,0.5],["circ",-24.381,59.066,0.5],["circ",-29.98,51.395,0.5],["circ",-38.056,48.566,0.5],["circ",-45.895,44.462,0.5],["circ",-47.974,35.196,0.5],["circ",-54.254,29.383,0.5],["circ",-59.809,22.497,0.5],["circ",-58.024,13.169,0.5],["circ",-61.469,5.336,0.5],["circ",-63.82,-3.194,0.5],["circ",-58.467,-11.038,0.5],["circ",-58.506,-19.595,0.5],["circ",-57.264,-28.355,0.5],["circ",-49.229,-33.417,0.5],["circ",-45.855,-41.282,0.5],["circ",-41.227,-48.822,0.5],["circ",-31.84,-50.264,0.5],["circ",-25.613,-56.133,0.5],["circ",-18.363,-61.205,0.5],["circ",-9.179,-58.788,0.5],["circ",-1.129,-61.69,0.5],["circ",7.541,-63.453,0.5],["circ",15.002,-57.578,0.5],["circ",23.542,-57.032,0.5],["circ",32.197,-55.196,0.5],["circ",36.699,-46.834,0.5],["circ",44.315,-42.931,0.5],["circ",51.521,-37.799,0.5],["circ",52.32,-28.336,0.5],["circ",57.75,-21.722,0.5],["circ",62.315,-14.143,0.5],["circ",59.277,-5.146,0.5],["circ",18.546,6.026,0.5],["circ",-18.546,6.026,0.5],["circ",-18.546,-6.026,0.5],["circ",-0.0,-19.5,0.5],["circ",18.546,-6.026,0.5],["circ",-23.832,14.49,0.5],["circ",-1.362,-44.294,0.5],["circ",36.531,-24.17,0.5],["circ",-24.018,-12.822,0.5]],"zones":[{"id":"parade","icon":2,"x":-17.5,"z":30.31},{"id":"fashion","icon":5,"x":-35.0,"z":0.0},{"id":"kpop","icon":1,"x":-17.5,"z":-30.31},{"id":"concert","icon":6,"x":17.5,"z":-30.31},{"id":"edm","icon":0,"x":35.0,"z":0.0},{"id":"food","icon":4,"x":17.5,"z":30.31}],"singer":{"x":19.8,"z":-34.29}};
+  var FEST={"coll":[["circ",0,0,8.4],["box",12.364,4.017,1.1,0.3,1.2566],["box",-12.364,4.017,1.1,0.3,-1.2566],["box",-12.364,-4.017,1.1,0.3,-1.885],["box",-0.0,-13.0,1.1,0.3,-3.1416],["box",12.364,-4.017,1.1,0.3,1.885],["circ",8.639,9.028,0.28],["circ",8.917,-4.352,0.28],["circ",-8.46,-8.103,0.28],["circ",9.213,10.842,0.28],["circ",5.179,-11.7,0.28],["circ",-11.556,1.211,0.28],["circ",4.701,-13.932,0.28],["circ",12.895,7.417,0.28],["circ",-4.982,-9.484,0.28],["circ",3.531,11.023,0.28],["circ",-3.77,-10.902,0.28],["circ",-13.206,3.437,0.28],["circ",7.354,-10.753,0.28],["circ",4.51,8.528,0.28],["circ",9.721,9.985,0.28],["circ",7.645,-5.907,0.28],["circ",-6.709,19.221,0.2],["circ",-13.291,15.421,0.2],["circ",-7.581,17.373,0.28],["circ",-11.761,22.858,0.28],["circ",-20.0,3.8,0.2],["circ",-20.0,-3.8,0.2],["circ",-26.805,-1.94,0.28],["circ",-24.719,2.024,0.28],["circ",-13.291,-15.421,0.2],["circ",-6.709,-19.221,0.2],["circ",-8.787,-18.258,0.28],["circ",-11.044,-21.603,0.28],["circ",6.709,-19.221,0.2],["circ",13.291,-15.421,0.2],["circ",10.46,-21.253,0.28],["circ",10.646,-22.528,0.28],["circ",20.0,-3.8,0.2],["circ",20.0,3.8,0.2],["circ",26.989,-1.566,0.28],["circ",25.833,0.6,0.28],["circ",13.291,15.421,0.2],["circ",6.709,19.221,0.2],["circ",8.931,16.446,0.28],["circ",10.977,20.218,0.28],["circ",3.8,20.0,0.2],["circ",-3.8,20.0,0.2],["circ",3.8,27.0,0.2],["circ",-3.8,27.0,0.2],["circ",3.8,34.0,0.2],["circ",-3.8,34.0,0.2],["circ",3.8,41.0,0.2],["circ",-3.8,41.0,0.2],["circ",3.8,48.0,0.2],["circ",-3.8,48.0,0.2],["circ",1.625,29.97,0.28],["circ",1.821,21.932,0.28],["circ",-0.881,48.847,0.28],["circ",0.154,22.894,0.28],["circ",-1.34,42.434,0.28],["circ",1.593,26.472,0.28],["circ",-0.465,27.718,0.28],["circ",-1.033,30.147,0.28],["circ",-0.234,32.114,0.28],["box",-20.5,-35.507,10.0,4.0,0.5236],["box",-29.507,-30.307,0.3,0.3,0.5236],["box",-11.493,-40.707,0.3,0.3,0.5236],["box",-29.825,-26.659,0.8,0.7,0.5236],["box",-8.175,-39.159,0.8,0.7,0.5236],["circ",-9.308,-32.421,0.28],["circ",-15.912,-29.23,0.28],["circ",-9.209,-26.125,0.28],["circ",-7.812,-27.193,0.28],["circ",-13.257,-27.887,0.28],["circ",-17.833,-26.971,0.28],["circ",-10.968,-25.471,0.28],["circ",-10.793,-28.314,0.28],["circ",-20.97,-21.448,0.28],["circ",-10.511,-25.195,0.28],["circ",-10.703,-31.503,0.28],["circ",-18.281,-27.287,0.28],["circ",-15.701,-25.661,0.28],["circ",-19.615,-21.659,0.28],["circ",-14.336,-25.792,0.28],["circ",-13.125,-23.141,0.28],["circ",-23.672,-24.391,0.28],["circ",-9.588,-32.738,0.28],["circ",-15.739,-28.486,0.28],["circ",-18.202,-21.577,0.28],["circ",-18.85,-25.44,0.28],["circ",-11.086,-28.253,0.28],["circ",-9.371,-24.305,0.28],["circ",-20.32,-23.604,0.28],["circ",-22.846,-24.998,0.28],["circ",-15.472,-22.921,0.28],["circ",-23.501,-24.698,0.28],["circ",-7.571,-25.859,0.28],["circ",-7.33,-25.867,0.28],["circ",-11.666,-28.572,0.28],["circ",-15.297,-29.052,0.28],["circ",-8.536,-25.298,0.28],["circ",-18.773,-19.507,0.28],["circ",-7.49,-28.871,0.28],["circ",-17.883,-26.666,0.28],["circ",-12.201,-28.636,0.28],["circ",-14.922,-25.919,0.28],["circ",-19.717,-22.798,0.28],["circ",-8.355,-29.345,0.28],["circ",-19.257,-22.077,0.28],["circ",-22.109,-25.619,0.28],["circ",-13.45,-26.124,0.28],["circ",-6.945,-26.024,0.28],["circ",-14.984,-25.193,0.28],["circ",-18.063,-27.87,0.28],["circ",-20.372,-26.65,0.28],["box",20.5,-35.507,6.5,3.25,-0.5236],["circ",13.477,-30.844,0.28],["circ",16.075,-29.344,0.28],["circ",17.375,-28.594,0.28],["circ",18.674,-27.844,0.28],["circ",19.973,-27.094,0.28],["circ",21.272,-26.344,0.28],["box",16.75,-29.012,6.0,0.3,-0.5236],["circ",11.378,-30.208,0.28],["circ",15.275,-27.958,0.28],["circ",16.575,-27.208,0.28],["circ",17.874,-26.458,0.28],["box",15.95,-27.626,6.0,0.3,-0.5236],["circ",13.176,-27.322,0.28],["circ",14.475,-26.572,0.28],["box",15.15,-26.241,6.0,0.3,-0.5236],["circ",9.778,-27.437,0.28],["circ",11.077,-26.687,0.28],["circ",12.376,-25.937,0.28],["circ",14.975,-24.437,0.28],["circ",16.274,-23.687,0.28],["circ",18.872,-22.187,0.28],["box",14.35,-24.855,6.0,0.3,-0.5236],["box",12.618,-37.055,0.6,0.5,-0.5236],["box",25.782,-29.455,0.6,0.5,-0.5236],["box",41.0,-0.0,7.0,3.5,-1.5708],["box",40.0,-8.6,1.1,1.0,-1.5708],["box",40.0,8.6,1.1,1.0,-1.5708],["circ",33.266,-2.928,0.28],["circ",32.583,4.039,0.28],["circ",29.111,-2.521,0.28],["circ",33.311,-1.442,0.28],["circ",31.468,-2.85,0.28],["circ",30.678,-2.654,0.28],["circ",32.144,-4.173,0.28],["circ",27.651,5.152,0.28],["circ",29.177,2.542,0.28],["circ",29.184,-2.037,0.28],["circ",27.145,5.669,0.28],["circ",27.498,-1.37,0.28],["circ",27.434,0.211,0.28],["circ",28.781,1.523,0.28],["circ",32.103,6.002,0.28],["circ",28.939,1.852,0.28],["circ",26.819,-1.661,0.28],["circ",31.596,-3.139,0.28],["circ",29.039,4.788,0.28],["circ",29.24,3.542,0.28],["circ",28.741,-0.671,0.28],["circ",29.942,2.295,0.28],["circ",26.764,6.322,0.28],["circ",31.788,-4.354,0.28],["circ",26.5,-6.26,0.28],["circ",27.927,-0.591,0.28],["circ",32.769,0.459,0.28],["circ",29.187,-2.282,0.28],["circ",33.409,4.307,0.28],["circ",28.747,4.752,0.28],["box",-35.5,0.0,1.6,8.5,1.5708],["box",-44.6,0.0,5.5,0.3,1.5708],["box",-41.0,6.2,0.4,1.3,1.5708],["box",-35.0,6.2,0.4,1.3,1.5708],["box",-29.0,6.2,0.4,1.3,1.5708],["box",-41.0,-6.2,0.4,1.3,1.5708],["box",-35.0,-6.2,0.4,1.3,1.5708],["box",-29.0,-6.2,0.4,1.3,1.5708],["circ",-38.361,-4.348,0.28],["circ",-30.041,3.894,0.28],["circ",-37.682,-2.687,0.28],["circ",-33.269,4.32,0.28],["circ",-27.292,-3.231,0.28],["circ",-34.049,2.902,0.28],["circ",-41.378,-3.875,0.28],["circ",-31.948,4.351,0.28],["circ",-39.896,-4.139,0.28],["circ",-28.85,3.429,0.28],["circ",-31.33,-4.209,0.28],["circ",-40.68,4.444,0.28],["circ",-31.703,-4.414,0.28],["circ",-35.276,2.805,0.28],["circ",-37.908,-3.777,0.28],["circ",-40.394,3.148,0.28],["circ",-37.835,-2.903,0.28],["circ",-29.354,3.261,0.28],["circ",-39.292,-3.051,0.28],["circ",-27.611,4.48,0.28],["circ",-33.708,-4.475,0.28],["circ",-36.062,4.214,0.28],["box",24.6,28.579,1.4,0.4,-1.5708],["box",26.0,28.579,1.5,1.0,-1.5708],["circ",23.385,27.649,0.28],["circ",22.8,28.771,0.28],["box",23.9,31.873,1.4,0.4,-1.9897],["box",25.179,32.443,1.5,1.0,-1.9897],["circ",21.98,31.984,0.28],["circ",22.673,31.518,0.28],["box",21.92,34.598,1.4,0.4,-2.4086],["box",22.857,35.639,1.5,1.0,-2.4086],["circ",21.137,32.839,0.28],["circ",21.549,32.713,0.28],["box",19.003,36.282,1.4,0.4,-2.8274],["box",19.436,37.614,1.5,1.0,-2.8274],["circ",19.011,34.76,0.28],["circ",18.197,35.142,0.28],["box",15.653,36.634,1.4,0.4,3.0369],["box",15.507,38.027,1.5,1.0,3.0369],["circ",14.901,35.256,0.28],["circ",16.41,35.33,0.28],["box",12.45,35.594,1.4,0.4,2.618],["box",11.75,36.806,1.5,1.0,2.618],["circ",13.642,34.69,0.28],["circ",12.94,34.155,0.28],["box",18.964,24.847,1.0,0.4,-2.618],["circ",19.624,25.332,0.28],["box",14.75,25.548,1.0,0.4,-2.618],["circ",14.777,24.666,0.28],["box",12.036,28.847,1.0,0.4,-2.618],["circ",12.253,29.588,0.28],["circ",11.5,28.29,0.28],["box",15.155,21.85,1.0,0.4,-2.618],["circ",15.044,21.048,0.28],["box",11.345,24.05,1.0,0.4,-2.618],["circ",11.304,24.939,0.28],["circ",23.16,20.115,0.3],["circ",5.84,30.115,0.3],["box",-13.737,34.793,0.6,0.6,2.618],["box",-23.263,29.293,0.6,0.6,2.618],["circ",-13.773,42.855,0.3],["circ",-30.227,33.355,0.3],["circ",-29.351,35.048,0.28],["circ",-16.788,42.704,0.28],["circ",-29.229,34.617,0.28],["circ",-14.527,41.518,0.28],["circ",-11.973,39.737,0.3],["circ",-28.427,30.237,0.3],["circ",-27.567,31.941,0.28],["circ",-26.982,31.566,0.28],["circ",-13.867,38.942,0.28],["circ",-13.065,39.517,0.28],["circ",-10.173,36.62,0.3],["circ",-26.627,27.12,0.3],["circ",-24.724,28.95,0.28],["circ",-24.339,27.696,0.28],["circ",-25.769,28.169,0.28],["circ",-25.446,28.541,0.28],["circ",-8.373,33.502,0.3],["circ",-24.827,24.002,0.3],["circ",-24.351,25.787,0.28],["circ",-10.511,32.608,0.28],["circ",-23.432,25.163,0.28],["circ",-9.231,32.645,0.28],["circ",-6.573,30.384,0.3],["circ",-23.027,20.884,0.3],["circ",-7.22,29.154,0.28],["circ",-22.315,22.117,0.28],["circ",-20.982,22.468,0.28],["circ",-9.399,29.395,0.28],["circ",-4.773,27.267,0.3],["circ",-21.227,17.767,0.3],["circ",-19.131,17.988,0.28],["circ",-19.832,18.362,0.28],["circ",-7.227,27.083,0.28],["circ",-18.865,18.693,0.28],["box",-21.0,36.373,1.5,2.5,2.618],["box",-16.25,28.146,1.5,2.5,2.618],["box",-6.0,52.0,0.7,0.7,-0.0],["box",6.0,52.0,0.7,0.7,-0.0],["circ",59.426,2.974,0.5],["circ",60.629,11.446,0.5],["circ",60.592,20.294,0.5],["circ",53.321,26.403,0.5],["circ",51.05,34.653,0.5],["circ",47.491,42.753,0.5],["circ",38.388,45.46,0.5],["circ",33.017,52.122,0.5],["circ",26.526,58.134,0.5],["circ",17.098,56.99,0.5],["circ",-15.557,59.707,0.5],["circ",-24.381,59.066,0.5],["circ",-29.98,51.395,0.5],["circ",-38.056,48.566,0.5],["circ",-45.895,44.462,0.5],["circ",-47.974,35.196,0.5],["circ",-54.254,29.383,0.5],["circ",-59.809,22.497,0.5],["circ",-58.024,13.169,0.5],["circ",-61.469,5.336,0.5],["circ",-63.82,-3.194,0.5],["circ",-58.467,-11.038,0.5],["circ",-58.506,-19.595,0.5],["circ",-57.264,-28.355,0.5],["circ",-49.229,-33.417,0.5],["circ",-45.855,-41.282,0.5],["circ",-41.227,-48.822,0.5],["circ",-31.84,-50.264,0.5],["circ",-25.613,-56.133,0.5],["circ",-18.363,-61.205,0.5],["circ",-9.179,-58.788,0.5],["circ",-1.129,-61.69,0.5],["circ",7.541,-63.453,0.5],["circ",15.002,-57.578,0.5],["circ",23.542,-57.032,0.5],["circ",32.197,-55.196,0.5],["circ",36.699,-46.834,0.5],["circ",44.315,-42.931,0.5],["circ",51.521,-37.799,0.5],["circ",52.32,-28.336,0.5],["circ",57.75,-21.722,0.5],["circ",62.315,-14.143,0.5],["circ",59.277,-5.146,0.5],["circ",18.546,6.026,0.5],["circ",-18.546,6.026,0.5],["circ",-18.546,-6.026,0.5],["circ",-0.0,-19.5,0.5],["circ",18.546,-6.026,0.5],["circ",-23.832,14.49,0.5],["circ",-1.362,-44.294,0.5],["circ",36.531,-24.17,0.5],["circ",-24.018,-12.822,0.5]],"zones":[{"id":"parade","icon":2,"x":-17.5,"z":30.31},{"id":"fashion","icon":5,"x":-35.0,"z":0.0},{"id":"kpop","icon":1,"x":-17.5,"z":-30.31},{"id":"concert","icon":6,"x":17.5,"z":-30.31},{"id":"edm","icon":0,"x":35.0,"z":0.0},{"id":"food","icon":4,"x":17.5,"z":30.31}],"singer":{"x":19.8,"z":-34.29},"runway":{"a":[-43.3,0.8,0.0],"b":[-27.7,0.8,0.0]}};
   var ZINFO={
     parade:{icon:'flag',name:'그랜드 퍼레이드',day:'10.03 (금)',t:'16:00',end:'18:00',hour:16,ord:316},
     concert:{icon:'music',name:'패밀리 콘서트',day:'10.03 (금)',t:'19:00',end:'21:30',hour:19,ord:319},
@@ -447,11 +437,20 @@
     fw={sc:sc,anchor:g('monument_anchor'),mon:null,monPivot:null,beams:{}};
     var pl=g('player');if(pl)pl.visible=false;   // 1인칭이라 캐릭터는 숨김
     Object.keys(ZINFO).forEach(function(id){var b=g('beam_'+id);if(b){b.visible=false;fw.beams[id]=b}});
+    // 일정 활성화 그래픽: 구역 바닥 빛 + 빛의 막 + 퍼지는 물결
+    fw.zg={};
+    Object.keys(ZINFO).forEach(function(id){
+      var n=g('zg_'+id),r=g('zgr_'+id);if(!n)return;
+      var mats={};n.traverse(function(o){if(o.material)mats[o.material.name]=o.material});
+      var rm=null;if(r)r.traverse(function(o){if(o.material)rm=o.material});
+      n.visible=false;if(r)r.visible=false;
+      fw.zg[id]={n:n,r:r,rm:rm,ring:mats['zg_ring_'+id],pool:mats['zg_pool_'+id],aura:mats['zg_aura_'+id],on:0,target:0,rip:-1};
+    });
     // 빛 웅덩이·빛줄기는 가산 혼합, 그림자 데칼은 깊이 쓰기 끔 → 빛이 번지는 느낌
     var fogColor=null;
     sc.traverse(function(o){
       if(!o.material)return;var m=o.material,n=m.name||'';
-      if(/^(pool_|shaft_|beam|spot_|fw_)/.test(n)){m.blending=2;m.depthWrite=false;m.transparent=true;m.fog=false}
+      if(/^(pool_|shaft_|beam|spot_|fw_|zg_)/.test(n)){m.blending=2;m.depthWrite=false;m.transparent=true;m.fog=false}
       if(n==='spot_singer'||n==='pool_singer')SG.lights.push(m);
       if(n==='ao'){m.depthWrite=false;m.transparent=true}
       if(!fogColor&&m.color)fogColor=m.color.clone();
@@ -461,6 +460,8 @@
       sc.fog={isFog:true,name:'',color:fogColor,near:28,far:135,clone:function(){return this},toJSON:function(){return{}}};
       sc.traverse(function(o){if(o.material)o.material.needsUpdate=true});}
     fw.fws=[];for(var q=0;q<5;q++){var fn=g('fw_'+q);if(fn){var fm=null;fn.traverse(function(o){if(o.material&&!fm)fm=o.material});fn.visible=false;fw.fws.push({n:fn,m:fm})}}
+    fw.rw=[];for(var q=0;q<3;q++){var rn=g('rw_'+q);if(rn)fw.rw.push({n:rn,b:g('rw_'+q+'_body'),ll:g('rw_'+q+'_leg_l'),lr:g('rw_'+q+'_leg_r'),al:g('rw_'+q+'_arm_l'),ar:g('rw_'+q+'_arm_r')})}
+    fw.pg=[];for(var q=0;q<7;q++){var pn=g('pigeon_'+q);if(pn)fw.pg.push({n:pn,h:g('pigeon_'+q+'_head'),ry:pn.rotation.y,seed:q*1.7,hy:g('pigeon_'+q+'_head').position.y})}
     SG.root=g('singer');SG.body=g('singer_body');SG.head=g('singer_head');SG.al=g('singer_arm_l');SG.ar=g('singer_arm_r');
     if(SG.body){SG.by=SG.body.position.y;SG.hy=SG.head.position.y}
     F.ready=true;checkReady();attachMonument();placeCam();
@@ -549,6 +550,9 @@
     schedN.textContent=ids.length;schedE.hidden=ids.length>0;
     signs.forEach(function(s){var id=s.dataset.zone;s.classList.toggle('sel',!!SCHED[id]);s.classList.toggle('done',!!VISITED[id])});
     if(fw)Object.keys(fw.beams).forEach(function(id){fw.beams[id].visible=!!SCHED[id]&&!VISITED[id]});
+    if(fw&&fw.zg)Object.keys(fw.zg).forEach(function(id){var z=fw.zg[id],want=SCHED[id]?1:0;
+      if(want&&!z.target){z.rip=performance.now()}   // 새로 담으면 물결이 퍼짐
+      z.target=want});
     if(fw)fw.sc.queueRender();
   }
   function updatePick(silent){
@@ -571,7 +575,38 @@
     click('s');phoneKick();updatePick();
   }
   function turnPurple(dir){PH.pT+=30*dir;click('p');phoneKick()}
+  // ── 멀리서 조준: 화면 가운데(조준점)가 향한 구역을 찾음 ──
+  var aimId=null,fAim=$('fAim');
+  function updateAim(){
+    if(!F.active||coarse){setAim(null);return}
+    var sp=Math.sin(F.pitch),fx=-sp*Math.sin(F.yaw),fy=-Math.cos(F.pitch),fz=-sp*Math.cos(F.yaw),best=null,bestA=1e9;
+    FEST.zones.forEach(function(z){
+      var dx=z.x-F.x,dy=4-EYE,dz=z.z-F.z,d=Math.hypot(dx,dy,dz);if(Math.hypot(dx,dz)<11)return;
+      var a=Math.acos(Math.max(-1,Math.min(1,(dx*fx+dy*fy+dz*fz)/d))),lim=Math.max(Math.atan2(10,d),0.06);
+      if(a<lim&&a<bestA){bestA=a;best=z.id}
+    });
+    setAim(best);
+  }
+  function setAim(id){
+    if(id===aimId){if(id)aimLabel();return}aimId=id;fStage.classList.toggle('aiming',!!id);
+    signs.forEach(function(s){s.classList.toggle('target',s.dataset.zone===id)});
+    if(id)aimLabel();fAim.hidden=!id;
+  }
+  function aimLabel(){var p=ZINFO[aimId],inS=!!SCHED[aimId];
+    fAim.className='f-aim'+(inS?' in':'');
+    fAim.innerHTML='<svg><use href="#i-'+p.icon+'"/></svg>'+p.name+' <small>'+(inS?'담은 일정 · 클릭해서 빼기':'클릭해서 일정에 담기')+'</small>'}
+  // 다이얼을 그 프로그램 아이콘으로 돌림
+  function dialTo(id){
+    var idx=FEST.zones.filter(function(z){return z.id===id})[0].icon,cur=Math.round(PH.sT/45),dl=((idx-PSTART-cur)%8+8)%8;if(dl>4)dl-=8;
+    if(dl){PH.sT=(cur+dl)*45;click('s')}PH.pT=snapHour(ZINFO[id].hour,PH.pT);phoneKick();updatePick(true);
+  }
+  // 표지판을 직접 눌러도 담기 (마우스가 풀려 있을 때 · 휴대폰)
+  setTimeout(function(){signs.forEach(function(s){var id=s.dataset.zone;if(!ZINFO[id])return;
+    s.addEventListener('pointerdown',function(e){e.stopPropagation()});
+    s.addEventListener('click',function(e){e.stopPropagation();if(!F.active)return;if(soundOn)audio();setAim(null);dialTo(id);toggleSched()})})},0);
+
   function toggleSched(){
+    if(aimId){dialTo(aimId)}
     var p=progOf(selIdx());
     if(!p){toast('이 아이콘은 아직 프로그램이 없어요');return}
     if(SCHED[p.id]){delete SCHED[p.id];toast(p.name+' — 일정에서 뺐어요')}
@@ -580,7 +615,7 @@
       if(cl.length){toast('주의: '+cl.map(function(o){return ZINFO[o].name+'('+ZINFO[o].t+'–'+ZINFO[o].end+')'}).join(', ')+'와(과) 시간이 겹쳐요');warnTone()}
       else{toast('일정에 담았어요 · '+p.name+' '+p.t+' — 나침반을 따라가 보세요');chime()}
     }
-    renderSched();updatePick(true);
+    renderSched();updatePick(true);if(aimId)aimLabel();
   }
   var toastT=0;
   var toastImpT=0;
@@ -618,9 +653,9 @@
   fEnter.addEventListener('click',enter);
   // 휴대폰: 입장하면 화면 전체를 쓰는 게임 모드, ✕로 나가기
   var fsScroll=0;
-  function openFS(){fsScroll=scrollY;fStage.classList.add('fs');document.documentElement.classList.add('fest-open');$('fSched').classList.remove('open');phoneEl.cameraOrbit='4deg 18deg 0.17m';phoneEl.cameraTarget='0.002m 0.004m 0.022m';if(phoneEl.jumpCameraToGoal)phoneEl.jumpCameraToGoal()}
+  function openFS(){fsScroll=scrollY;fStage.classList.add('fs');document.documentElement.classList.add('fest-open');$('fSched').classList.remove('open');phoneEl.cameraOrbit='4deg 18deg 0.51m';phoneEl.cameraTarget='0.002m 0.004m 0.022m';if(phoneEl.jumpCameraToGoal)phoneEl.jumpCameraToGoal()}
   function closeFS(){
-    fStage.classList.remove('fs','playing','raise');document.documentElement.classList.remove('fest-open');phoneEl.cameraOrbit='5deg 20deg 0.25m';phoneEl.cameraTarget='0.003m 0.004m 0.02m';
+    fStage.classList.remove('fs','playing','raise');document.documentElement.classList.remove('fest-open');phoneEl.cameraOrbit='5deg 20deg 0.75m';phoneEl.cameraTarget='0.003m 0.004m 0.02m';
     F.active=false;keys={};joyEnd();fJoy.hidden=true;$('fMbtn').hidden=true;
     fStart.classList.remove('hide');fEnter.textContent='이어서 하기';
     if(document.pointerLockElement)document.exitPointerLock();
@@ -787,6 +822,65 @@
     if(!any&&T>16){FIN.on=false;fw.fws.forEach(function(f){f.n.visible=false})}
   }
 
+  // ── 일정에 담은 구역: 바닥이 숨쉬듯 빛나고, 도착하면 더 밝게 ──
+  function animateZoneGlow(now,dt){
+    if(!fw.zg)return;
+    Object.keys(fw.zg).forEach(function(id){
+      var z=fw.zg[id];z.on+=(z.target-z.on)*Math.min(1,dt*3);
+      var vis=z.on>0.01;z.n.visible=vis;
+      if(vis){
+        var here=curZone&&curZone.id===id,done=VISITED[id];
+        var pulse=0.72+0.28*Math.sin(now/520+id.length);
+        var k=z.on*(here?1.25:done?0.8:1)*pulse;
+        if(z.ring)z.ring.opacity=Math.min(1,k);
+        if(z.pool)z.pool.opacity=0.6*k;
+        if(z.aura)z.aura.opacity=Math.min(1,0.85*k*(here?1.2:1));
+      }
+      if(z.r){
+        if(z.rip>0){var u=(now-z.rip)/1400;
+          if(u<1){z.r.visible=true;var sc=1+u*1.1;z.r.scale.set(sc,1,sc);if(z.rm)z.rm.opacity=(1-u)*(1-u)}
+          else{z.rip=-1;z.r.visible=false}}
+        else z.r.visible=false;
+      }
+    });
+  }
+
+  // ── 런웨이 모델: 무대 뒤에서 걸어 나와 끝에서 포즈, 돌아서 들어감 ──
+  function animateRunway(now){
+    if(!fw.rw||!fw.rw.length)return;
+    var A=FEST.runway.a,B=FEST.runway.b,dx=B[0]-A[0],dz=B[2]-A[2],L=Math.hypot(dx,dz),SPD=1.15,WALK=L/SPD,POSE=1.8,TURN=0.6;
+    var CYC=2*(WALK+POSE+TURN),t=now/1000;
+    fw.rw.forEach(function(m,k){
+      var c=((t+k*CYC/3)%CYC+CYC)%CYC,u,dir,walking=false,pose=0,yawExtra=0;
+      if(c<WALK){u=c/WALK;dir=1;walking=true}
+      else if(c<WALK+POSE){u=1;dir=1;pose=(c-WALK)/POSE}
+      else if(c<WALK+POSE+TURN){u=1;dir=1;yawExtra=Math.PI*(c-WALK-POSE)/TURN}
+      else if(c<2*WALK+POSE+TURN){u=1-(c-WALK-POSE-TURN)/WALK;dir=-1;walking=true}
+      else if(c<2*WALK+2*POSE+TURN){u=0;dir=-1;pose=(c-2*WALK-POSE-TURN)/POSE}
+      else{u=0;dir=-1;yawExtra=Math.PI*(c-2*WALK-2*POSE-TURN)/TURN}
+      var yaw=Math.atan2(dx*dir,dz*dir)+yawExtra;
+      m.n.position.set(A[0]+dx*u,A[1],A[2]+dz*u);m.n.rotation.y=yaw;
+      var ph=t*SPD*3.2,sw=walking?Math.sin(ph)*0.42:0;
+      m.ll.rotation.x=sw;m.lr.rotation.x=-sw;m.al.rotation.x=-sw*0.7;m.ar.rotation.x=sw*0.7;
+      m.b.position.y=walking?Math.abs(Math.cos(ph))*0.03:0;m.b.rotation.z=walking?Math.sin(ph)*0.035:0;
+      // 끝에서 포즈: 한 손은 허리, 고개 살짝
+      var p=pose>0?Math.sin(Math.min(1,pose)*Math.PI):0;
+      m.ar.rotation.z=0.9*p;m.ar.rotation.x+=-0.5*p;m.b.rotation.y=0.25*p;
+    });
+  }
+
+  // ── 비둘기: 고개를 까딱이며 걷는 듯 쪼고, 가끔 두리번 ──
+  function animatePigeons(now){
+    if(!fw.pg)return;var t=now/1000;
+    fw.pg.forEach(function(p){
+      var c=(t+p.seed*3)%6,peck=0,bob=Math.sin((t+p.seed)*7)*0.012;
+      if(c<0.9)peck=Math.sin(c/0.9*Math.PI*2)*0.5+0.5; // 두 번 쪼기
+      p.h.rotation.x=0.9*peck;p.h.position.z=0.09+bob;p.h.position.y=p.hy-0.03*peck;
+      p.n.rotation.y=p.ry+Math.sin(t*0.6+p.seed)*0.5;
+      p.h.rotation.y=c>3&&c<4.2?Math.sin((c-3)*5)*0.5:0;
+    });
+  }
+
   // ── 무대 가수: 박자(120BPM)에 맞춰 들썩이고, 마이크를 들었다 내렸다, 관객에게 손 흔들기 ──
   function animateSinger(now){
     if(!SG.body)return;
@@ -861,10 +955,10 @@
     var sx=Math.sin(F.phase)*10*mv,sy=Math.abs(Math.cos(F.phase))*9*mv+Math.sin(now/900)*2*(1-mv);
     fPhone.style.transform='translate('+sx.toFixed(1)+'px,'+sy.toFixed(1)+'px) rotate('+(-4+Math.sin(F.phase)*1.2*mv).toFixed(2)+'deg)';
     if(fw.mon){fw.mon.rotation.y+=dt*0.25;if(fw.monPivot){fw.monPivot.rotation.y-=dt*0.6;if(fw.monLens)fw.monLens.uAng.value=fw.monPivot.rotation.y}}
-    animateSinger(now);animateFinale(now);
+    animateSinger(now);animateFinale(now);animateZoneGlow(now,dt);animateRunway(now);animatePigeons(now);
     if(frameN%4===0)setZone(zoneAt());
     placeCam(bob);fw.sc.queueRender();
-    if(frameN%3===0){drawMap();updateNav()}
+    if(frameN%3===0){drawMap();updateNav();updateAim()}
     requestAnimationFrame(festLoop);
   }
   drawMap();

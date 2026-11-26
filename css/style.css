@@ -7,7 +7,7 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 section{scroll-margin-top:72px}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard Variable',Pretendard,-apple-system,'Noto Sans KR','Apple SD Gothic Neo',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 ::selection{background:var(--purple);color:#fff}
@@ -387,6 +387,15 @@ html.fest-open header{visibility:hidden}
   #fEnter{padding:15px 40px}
 }
 
+.f-aim{position:absolute;left:50%;top:calc(50% + 18px);transform:translateX(-50%);display:flex;align-items:center;gap:7px;padding:7px 13px 7px 9px;border-radius:99px;background:rgba(18,10,28,.82);border:1px solid #c9a8f0;font-size:12.5px;font-weight:600;white-space:nowrap;pointer-events:none;box-shadow:0 0 18px rgba(165,107,224,.45)}
+.f-aim svg{width:15px;height:15px;color:#fff}
+.f-aim small{font-weight:500;color:var(--lilac)}
+.f-aim.in small{color:#8ef0b0}
+.fest.aiming .f-cross{width:14px;height:14px;margin:-7px;background:transparent;border:2px solid #fff;box-shadow:0 0 10px #c9a8f0}
+.zsign.target{border-color:#fff;background:linear-gradient(135deg,#9b6ad8,#4c2878);transform:translateY(-50%) scale(1.15);box-shadow:0 0 0 3px rgba(255,255,255,.25),0 0 24px rgba(165,107,224,.7)}
+.fest.playing .zsign[data-zone]:not(.zs-main):not(.zs-gate){pointer-events:auto;cursor:pointer}
+.fest.locked .zsign{pointer-events:none!important}
+
 /* about / footer */
 .about{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,100px)}
 .about h2{margin:0;font-size:clamp(34px,4.6vw,72px);letter-spacing:-.05em;line-height:1.08;font-weight:700}
@@ -454,86 +463,3 @@ footer{padding:clamp(70px,10vw,140px) var(--pad) 34px;border-top:1px solid var(-
   .marquee-track,.ring-deco::before{animation:none}
   .reveal{opacity:1;transform:none}
 }
-
-/* ── 진입 다이얼 연출 ── */
-html.intro-lock,html.intro-lock body{overflow:hidden}
-#intro{position:fixed;inset:0;z-index:300;display:grid;place-items:center;background:var(--bg);overflow:hidden;cursor:default;
-  transition:opacity 1.2s cubic-bezier(.6,0,.2,1) .45s,visibility 0s 1.8s}
-.intro-glow{position:absolute;inset:-20%;background:radial-gradient(35% 35% at 50% 50%,rgba(123,75,176,.38),transparent 70%);transition:transform 1.8s cubic-bezier(.7,0,.2,1)}
-.intro-dial{position:relative;width:min(72vmin,460px);aspect-ratio:1;transition:transform 1.8s cubic-bezier(.75,0,.15,1),filter 1.4s}
-.intro-dial svg{width:100%;height:100%;display:block;overflow:visible}
-.intro-rot{transform-box:view-box;transform-origin:200px 200px}
-.intro-halo{fill:none;stroke:var(--line);stroke-width:1}
-.intro-ticks line{stroke:rgba(217,214,222,.35);stroke-width:1.2}
-.intro-ticks line.major{stroke:rgba(217,214,222,.75);stroke-width:1.6}
-#introInner line{stroke:rgba(255,255,255,.4);stroke-width:1.3}
-.intro-hand{stroke:var(--silver);stroke-width:2.4;stroke-linecap:round}
-.intro-hr{fill:rgba(255,255,255,.7);font-size:9px;font-weight:600;text-anchor:middle;dominant-baseline:central;font-variant-numeric:tabular-nums}
-.intro-glass{fill:rgba(12,7,17,.55);stroke:rgba(255,255,255,.12)}
-.intro-pointer{fill:var(--lilac)}
-.intro-ic{color:var(--dim);transition:color .4s}
-.intro-ic use{transition:filter .4s}
-.intro-ic.on{color:var(--lilac)}
-.intro-ic.on use{filter:drop-shadow(0 0 6px rgba(201,168,240,.9))}
-.intro-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;pointer-events:none}
-.intro-center b{font-size:clamp(26px,5.6vmin,40px);font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums}
-.intro-center span{font-size:9px;letter-spacing:2.2px;color:var(--lilac);font-weight:600}
-#intro.tick .intro-dial svg{animation:introTick .22s ease-out}
-@keyframes introTick{40%{transform:scale(1.012)}}
-.intro-hint{position:absolute;bottom:13vh;left:0;right:0;text-align:center;margin:0;font-size:12px;letter-spacing:.5px;color:var(--muted);opacity:0;transform:translateY(8px);transition:.6s}
-#intro.ready{cursor:pointer}
-#intro.ready .intro-hint{opacity:1;transform:none}
-#intro.ready .intro-pointer{animation:introPulse 1.4s ease-in-out infinite}
-@keyframes introPulse{50%{opacity:.35}}
-.intro-meta{position:absolute;left:var(--pad);right:var(--pad);bottom:28px;display:flex;justify-content:space-between;font-size:10px;letter-spacing:2px;color:var(--dim)}
-.intro-skip{position:absolute;top:20px;right:var(--pad);font-size:11px;letter-spacing:1px;color:var(--muted);padding:9px 14px;border:1px solid var(--line);border-radius:99px;transition:.25s}
-.intro-skip:hover{color:var(--ink);background:rgba(255,255,255,.06)}
-/* 입장: 다이얼이 딸깍 맞춰진 뒤 화면 가득 커지며 열림 */
-#intro.open{opacity:0;visibility:hidden;pointer-events:none}
-#intro.open .intro-dial{transform:scale(5.5) rotate(-40deg);filter:blur(2px)}
-#intro.open .intro-glow{transform:scale(2.2)}
-#intro.open .intro-hint,#intro.open .intro-meta,#intro.open .intro-skip,#intro.open .intro-center{opacity:0;transition:.3s}
-@media (prefers-reduced-motion:reduce){
-  #intro{transition:opacity .35s}
-  #intro.open .intro-dial{transform:none;filter:none}
-}
-@media (max-width:600px){.intro-dial{width:88vw}.intro-center span{font-size:8px;letter-spacing:1.6px}}
-.intro-center small{font-size:10px;letter-spacing:1.6px;color:var(--muted);font-variant-numeric:tabular-nums}
-#intro.ready .intro-center small{color:var(--lilac)}
-
-/* 진입 연출 v3 — 일정 리스트 → 원 → 다이얼 */
-.intro-list{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;padding:0;list-style:none;width:min(360px,84vw);pointer-events:none;z-index:2}
-.intro-list li{display:grid;grid-template-columns:calc(min(72vmin,460px)*.07) 1fr auto;align-items:center;gap:14px;padding:11px 2px;border-bottom:1px solid var(--line);
-  opacity:0;transform:translateY(14px);transition:opacity .6s var(--d),transform .8s cubic-bezier(.2,.7,.2,1) var(--d),border-color .4s}
-.intro-list li b{font-size:14px;font-weight:600;letter-spacing:-.3px;transition:opacity .35s}
-.intro-list li span{font-size:11px;color:var(--muted);letter-spacing:.4px;font-variant-numeric:tabular-nums;transition:opacity .35s}
-.il-ic{display:block;aspect-ratio:1;color:var(--lilac);transition:transform 1s cubic-bezier(.65,0,.25,1)}
-.il-ic svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 6px rgba(201,168,240,.6))}
-#intro.p-list .intro-list li{opacity:1;transform:none}
-#intro.p-gather .intro-list li{border-color:transparent;transition-delay:0s}
-#intro.p-gather .intro-list li b,#intro.p-gather .intro-list li span{opacity:0}
-#intro.p-dial .intro-list{opacity:0;transition:opacity .25s .15s}
-
-/* 다이얼 부품은 처음엔 숨김 */
-.intro-trace{fill:none;stroke:var(--lilac);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;opacity:.9;transition:stroke-dashoffset .9s cubic-bezier(.6,0,.3,1),opacity .6s}
-#intro.p-trace .intro-trace{stroke-dashoffset:0}
-#intro.p-dial .intro-trace{opacity:0;transition-delay:0s,.3s}
-#introRing > circle{opacity:0;transform-box:view-box;transform-origin:200px 200px;transform:scale(.86);transition:opacity .8s,transform 1s cubic-bezier(.2,.8,.2,1)}
-#introRing > circle:first-child{transition-delay:.1s}
-#intro.p-dial #introRing > circle{opacity:1;transform:none}
-#intro.p-dial #introRing > circle:first-child{opacity:.16}
-.intro-ticks line{opacity:0;transition:opacity .3s}
-#intro.p-dial .intro-ticks line{opacity:1}
-.intro-ic{opacity:0}
-#intro.p-dial .intro-ic{opacity:1}
-#introInner{transform:scale(0) rotate(-120deg);transition:transform 1.1s cubic-bezier(.3,1.25,.4,1) .2s}
-#intro.p-dial #introInner{transform:scale(1) rotate(-120deg)}
-#intro.p-set #introInner{transform:scale(1) rotate(-240deg);transition:transform .9s cubic-bezier(.3,1.3,.5,1)}
-.intro-hand,.intro-glass,.intro-pointer,.intro-halo{opacity:0;transition:opacity .6s .4s}
-#intro.p-dial .intro-glass,#intro.p-dial .intro-halo{opacity:1}
-#intro.p-set .intro-hand,#intro.p-set .intro-pointer{opacity:1;transition-delay:0s}
-.intro-center{opacity:0;transform:scale(.92);transition:opacity .6s,transform .6s}
-#intro.p-set .intro-center{opacity:1;transform:none}
-#intro.p-set .intro-center small{color:var(--lilac)}
-@media (prefers-reduced-motion:reduce){.intro-list{display:none}}
-#intro.open .intro-center,#intro.open .intro-list{opacity:0;transition:.3s}
